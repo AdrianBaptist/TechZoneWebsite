@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TechZone Gadget Store</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f4f7fb;
+      --surface: #ffffff;
+      --text: #111827;
+      --muted: #6b7280;
+      --accent: #0f766e;
+      --accent-strong: #0b5e59;
+      --offer: #f59e0b;
+      --danger: #ef4444;
+      --border: #e5e7eb;
+      --radius: 20px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: 'Inter', sans-serif;
+      color: var(--text);
+      background: linear-gradient(180deg, #f8fafc 0%, #edf2f7 100%);
+    }
+
+    img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 0 0 48px;
+    }
+
+    .topbar {
+      background: #111827;
+      color: #f8fafc;
+      font-size: 0.9rem;
+      padding: 12px 0;
+      text-align: center;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 18px 0;
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.4rem;
+      letter-spacing: -0.04em;
+      font-weight: 700;
+    }
+
+    .brand .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 4px;
+      background: var(--accent);
+    }
+
+    .nav-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+    }
+
+    .nav-links a {
+      padding: 10px 16px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      background: #f8fafc;
+      color: var(--muted);
+      font-size: 0.95rem;
+      transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+    }
+
+    .nav-links a:hover,
+    .nav-links a:focus-visible {
+      background: var(--accent);
+      color: #ffffff;
+      border-color: var(--accent-strong);
+      outline: none;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 32px;
+      align-items: center;
+      padding: 42px 0 24px;
+    }
+
+    .hero-copy {
+      max-width: 620px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--accent-strong);
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      font-weight: 700;
+      margin-bottom: 18px;
+    }
+
+    .hero-copy h1 {
+      font-size: clamp(2.6rem, 4vw, 4.8rem);
+      line-height: 0.98;
+      margin: 0;
+      letter-spacing: -0.04em;
+    }
+
+    .hero-copy p {
+      margin: 24px 0;
+      color: var(--muted);
+      font-size: 1rem;
+      max-width: 44ch;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 20px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 14px 22px;
+      border-radius: 999px;
+      font-weight: 600;
+      border: 1px solid transparent;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #ffffff;
+    }
+
+    .btn-secondary {
+      background: #ffffff;
+      color: var(--text);
+      border-color: #d1d5db;
+    }
+
+    .hero-image {
+      border-radius: 28px;
+      overflow: hidden;
+      position: relative;
+      box-shadow: 0 24px 90px rgba(15,23,42,0.12);
+    }
+
+    .hero-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      min-height: 420px;
+    }
+
+    .summary-cards {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+      margin-top: 32px;
+    }
+
+    .summary-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      padding: 22px;
+      box-shadow: 0 12px 30px rgba(15,23,42,0.05);
+    }
+
+    .summary-card h3 {
+      margin: 0 0 8px;
+      font-size: 1rem;
+    }
+
+    .summary-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.7;
+    }
+
+    .section {
+      padding: 32px 0;
+    }
+
+    .section-head {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .section-head h2 {
+      margin: 0;
+      font-size: 2rem;
+    }
+
+    .section-head p {
+      margin: 0;
+      color: var(--muted);
+      max-width: 54ch;
+    }
+
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 22px;
+    }
+
+    .product-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .product-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 45px rgba(15,23,42,0.12);
+    }
+
+    .product-media {
+      position: relative;
+      min-height: 206px;
+      overflow: hidden;
+      background: #e5e7eb;
+    }
+
+    .product-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .product-info {
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      flex: 1;
+    }
+
+    .product-info h3 {
+      margin: 0;
+      font-size: 1.05rem;
+    }
+
+    .product-info p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.7;
+    }
+
+    .price-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: auto;
+    }
+
+    .price {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .status {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--accent-strong);
+    }
+
+    .status.out {
+      color: var(--danger);
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px 14px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 700;
+    }
+
+    .badge.new {
+      background: #fef3c7;
+      color: #92400e;
+    }
+
+    .badge.offer {
+      background: #d8fdf7;
+      color: #0f766e;
+    }
+
+    .feature-strip {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 18px;
+      margin-top: 30px;
+    }
+
+    .feature-card {
+      background: linear-gradient(135deg, #0f766e 0%, #115e59 100%);
+      color: #ffffff;
+      border-radius: 24px;
+      padding: 28px;
+      min-height: 180px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .feature-card h3 {
+      margin: 0 0 10px;
+      font-size: 1.25rem;
+    }
+
+    .feature-card p {
+      margin: 0;
+      color: rgba(255,255,255,0.82);
+      line-height: 1.7;
+    }
+
+    footer {
+      padding: 24px 0 40px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    @media (max-width: 900px) {
+      .hero {
+        grid-template-columns: 1fr;
+      }
+
+      .summary-cards {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 680px) {
+      .header-inner {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .nav-links {
+        justify-content: stretch;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="topbar">Free shipping on orders over $120 • 24/7 customer support • Secure checkout</div>
+  <header>
+    <div class="header-inner">
+      <a class="brand" href="#top"><span class="dot"></span>TechZone</a>
+      <nav class="nav-links" aria-label="Primary categories">
+        <a href="#smartphones">Smartphones</a>
+        <a href="#laptops">Laptops</a>
+        <a href="#audio">Audio</a>
+        <a href="#wearables">Wearables</a>
+        <a href="#gaming">Gaming</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container" id="top">
+    <section class="hero">
+      <div class="hero-copy">
+        <div class="eyebrow">TechZone Gadget Store</div>
+        <h1>Premium gadgets, smart prices, and fast delivery.</h1>
+        <p>Shop best-selling smartphones, laptops, audio gear, wearables, and gaming accessories. Discover new arrivals and special offers handpicked for modern creators and gamers.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#smartphones">Browse Smartphones</a>
+          <a class="btn btn-secondary" href="#offers">View Offers</a>
+        </div>
+        <div class="summary-cards">
+          <div class="summary-card">
+            <h3>New arrivals</h3>
+            <p>Fresh launches from top brands, including the latest smartwatches and high-performance gaming peripherals.</p>
+          </div>
+          <div class="summary-card">
+            <h3>Fast delivery</h3>
+            <p>Get your gadget within 2-4 business days on most orders. Track your shipment from checkout to doorstep.</p>
+          </div>
+          <div class="summary-card">
+            <h3>Expert support</h3>
+            <p>Need help choosing the right device? Our product specialists are ready to assist you anytime.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-image">
+        <img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=1200&q=80" alt="Modern tech gadgets arranged on a desk">
+      </div>
+    </section>
+
+    <section id="offers" class="section">
+      <div class="section-head">
+        <div>
+          <h2>Special Offers & New Arrivals</h2>
+          <p>Save on select models across categories and explore newly released gear designed for speed, style, and everyday performance.</p>
+        </div>
+      </div>
+      <div class="feature-strip">
+        <div class="feature-card">
+          <div>
+            <h3>Holiday bundle savings</h3>
+            <p>Get up to 25% off on laptop and audio bundles. Includes free carrying case and one-year premium support.</p>
+          </div>
+          <span class="badge offer">Limited time</span>
+        </div>
+        <div class="feature-card">
+          <div>
+            <h3>New in stock</h3>
+            <p>Galaxy Watch 7, Razer Blade 15, and Sony WH-1000XM5 are available with exclusive launch prices.</p>
+          </div>
+          <span class="badge new">New arrival</span>
+        </div>
+        <div class="feature-card">
+          <div>
+            <h3>Free accessories</h3>
+            <p>Receive a complimentary charging cable with every smartwatch purchase while supplies last.</p>
+          </div>
+          <span class="badge offer">Free gift</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="smartphones" class="section">
+      <div class="section-head">
+        <div>
+          <h2>Smartphones</h2>
+          <p>Discover powerful cameras, vivid displays, and premium performance from today’s top mobile devices.</p>
+        </div>
+      </div>
+      <div class="product-grid">
+        <article class="product-card">
+          <div class="product-media">
+            <img src="https://celltronics.lk/wp-content/uploads/2024/01/Samsung-Galaxy-S24-Ultra-3.jpg" alt="Galaxy S24 Ultra smartphone">
+          </div>
+          <div class="product-info">
+            <h3>Galaxy S24 Ultra</h3>
+            <p>Advanced camera, long battery life, and a stunning curved display built for mobile productivity.</p>
+            <div class="price-row">
+              <span class="price">LKR 227,950.00</span>
+              <span class="status">In stock</span>
+            </div>
+          </div>
+        </article>
+        <article class="product-card">
+          <div class="product-media">
+            <img src="https://celltronics.lk/wp-content/uploads/2023/10/Google-Pixel-8-Pro.jpg" alt="Google Pixel 8 Pro smartphone">
+          </div>
+          <div class="product-info">
+            <h3>Pixel 8 Pro</h3>
+            <p>Smart AI features, clean Android experience, and a bright display for day-to-day ease.</p>
+            <div class="price-row">
+              <span class="price">LKR 161,990.00</span>
+              <span class="status">Only a few left</span>
+            </div>
+          </div>
+        </article>
+        <article class="product-card">
+          <div class="product-media">
+            <img src="https://celltronics.lk/wp-content/uploads/2023/09/Apple-iPhone-15-Pro-1.jpg" alt="iPhone 15 Pro smartphone">
+          </div>
+          <div class="product-info">
+            <h3>iPhone 15 Pro</h3>
+            <p>A powerful smartphone with premium design, advanced photo tools, and seamless Apple ecosystem connectivity.</p>
+            <div class="price-row">
+              <span class="price">LKR 200,000.00</span>
+              <span class="status">In stock</span>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="laptops" class="section">
+      <div class="section-head">
+        <div>
+          <h2>Laptops</h2>
+          <p>Choose sleek laptops for work, content creation, and high performance with long battery life and vivid screens.</p>
+        </div>
+      </div>
+      <div class="product-grid">
+        <article class="product-card">
+          <div class="product-media">
+            <img src="https://singerwebcdn.azureedge.net/resources/products/max/AS-ZEN-15G-U5-1TB-328-SIL-20251107-01.jpg" alt="Asus ZenBook 14 laptop">
+          </div>
+          <div class="product-info">
+            <h3>Asus ZenBook 14</h3>
+            <p>Ultra-thin design with crisp display, fast processors, and premium audio for creators on the move.</p>
+            <div class="price-row">
+              <span class="price">LKR 1,049.00</span>
+              <span class="status">In stock</span>
+            </div>
+          </div>
+        </article>
+        <article class="product-card">
+          <div class="product-media">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT9DQeXO7pPd-sGJNniG7EtblI-B8Y0qYT1bd40HBb6bg&s=10" alt="Apple MacBook Air M3 laptop">
+          </div>
+          <div class="product-info">
+            <h3>MacBook Air M3</h3>
+            <p>Feather-light performance with Apple’s latest chip, vibrant Retina display, and all-day battery life.</p>
+            <div class="price-row">
+              <span class="price">LKR 1,099.00</span>
+              <span class="status">Limited stock</span>
+            </div>
+          </div>
+        </article>
+        <article class="product-card">
+          <div class="product-media">
+            <img src="https://m.media-amazon.com/images/I/71CpZ3vzgoL.jpg" alt="Razer Blade 15 gaming laptop">
+          </div>
+          <div class="product-info">
+            <h3>Razer Blade 15</h3>
+            <p>High-end gaming performance with RTX graphics, fast refresh, and a compact anodized chassis.</p>
+            <div class="price-row">
+              <span class="price">LKR 1,799.00</span>
+              <span class="status">Back in stock</span>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="audio" class="section">
+      <div class="section-head">
+        <div>
+          <h2>Audio & Headphones</h2>
+          <p>Enjoy premium sound, noise cancellation, and comfortable fits for every playlist and commute.</p>
+        </div>
+      </div>
+      <div class="product-grid">
+        <article class="product-card">
+          <div class="product-media">
+            <img src="https://sm.pcmag.com/pcmag_au/review/b/bose-quiet/bose-quietcomfort-45_ubuh.jpg" alt="Bose QuietComfort 45 headphones">
+          </div>
+          <div class="product-info">
+            <h3>Bose QuietComfort 45</h3>
+            <p>Iconic noise cancellation and balanced sound for travel, work, and daily listening pleasure.</p>
+            <div class="price-row">
+              <span class="price">LKR 32,900.00</span>
+              <span class="status">In stock</span>
+            </div>
+          </div>
+        </article>
+        <article class="product-card">
+          <div class="product-media">
+            <img src="https://www.soundphilereview.com/wp-content/uploads/2022/11/Sony-WH1000XM5-review-6.jpg" alt="Sony WH-1000XM5 headphones">
+          </div>
+          <div class="product-info">
+            <h3>Sony WH-1000XM5</h3>
+            <p>Industry-leading wireless headphones with superior noise cancellation and rich detail.</p>
+            <div class="price-row">
+              <span class="price">LKR 85,400.00</span>
+              <span class="status">Only a few left</span>
+            </div>
+          </div>
+        </article>
+        <article class="product-card">
+          <div class="product-media">
+            <img src="https://i.ytimg.com/vi/wmV217ks7E4/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLBBvFa4dOOVZ0lezE1tXcDMFEVong" alt="Beats Studio Pro headphones">
+          </div>
+          <div class="product-info">
+            <h3>Beats Studio Pro</h3>
+            <p>Stylish over-ear headphones with punchy bass, spatial audio, and 40-hour battery life.</p>
+            <div class="price-row">
+              <span class="price">LKR 64,000.00</span>
+              <span class="status">In stock</span>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="wearables" class="section">
+      <div class="section-head">
+        <div>
+          <h2>Smartwatches & Wearables</h2>
+          <p>Stay connected, track workouts, and monitor your health with the latest wearable technology.</p>
+        </div>
+      </div>
+      <div class="product-grid">
+        <article class="product-card">
+          <div class="product-media">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT1xvg04zq9tpOfjIFOS9eb1ZG6Ydy5GM5K6BsxCtyz2A&s=10" alt="Apple Watch Ultra 2 wearable">
+          </div>
+          <div class="product-info">
+            <h3>Apple Watch Ultra 2</h3>
+            <p>Rugged performance, advanced health tracking, and a bright display for outdoor adventures.</p>
+            <div class="price-row">
+              <span class="price">Rs. 179,999</span>
+              <span class="status">In stock</span>
+            </div>
+          </div>
+        </article>
+        <article class="product-card">
+          <div class="product-media">
+            <img src="https://lifemobile.lk/wp-content/uploads/2024/08/l310.jpg" alt="Samsung Galaxy Watch 7 wearable">
+          </div>
+          <div class="product-info">
+            <h3>Galaxy Watch 7</h3>
+            <p>Smart notifications, workout insights, and sleek design with all-day battery life.</p>
+            <div class="price-row">
+              <span class="price">Rs. 51,900.00</span>
+              <span class="status">In stock</span>
+            </div>
+          </div>
+        </article>
+        <article class="product-card">
+          <div class="product-media">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQGst2WtekegVjXyUFJ2hgG2DKUzjOSWotExUAuZsPzDQ&s=10" alt="Fitbit Charge 6 wearable">
+          </div>
+          <div class="product-info">
+            <h3>Fitbit Charge 6</h3>
+            <p>A sleek fitness tracker with advanced health metrics, sleep analysis, and fast charging.</p>
+            <div class="price-row">
+              <span class="price">Rs. 49,900</span>
+              <span class="status">In stock</span>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="gaming" class="section">
+      <div class="section-head">
+        <div>
+          <h2>Gaming Accessories</h2>
+          <p>Level up your setup with precision mice, responsive keyboards, and mobile gaming controllers.</p>
+        </div>
+      </div>
+      <div class="product-grid">
+        <article class="product-card">
+          <div class="product-media">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQqRfK8n-psxXARnNFhHqnhBIGgngxRqb9p80IesfQDC097L1xqwoRP_Nul&s=10" alt="Logitech G502 gaming mouse">
+          </div>
+          <div class="product-info">
+            <h3>Logitech G502</h3>
+            <p>Precision gaming mouse with customizable buttons, adjustable weight, and RGB lighting.</p>
+            <div class="price-row">
+              <span class="price">LKR 16,500.00</span>
+              <span class="status">In stock</span>
+            </div>
+          </div>
+        </article>
+        <article class="product-card">
+          <div class="product-media">
+            <img src="https://m.media-amazon.com/images/I/71wXyhvukiL.jpg" alt="Razer Kishi V2 gaming controller">
+          </div>
+          <div class="product-info">
+            <h3>Razer Kishi V2</h3>
+            <p>Universal mobile controller for console-quality control on smartphones and tablets.</p>
+            <div class="price-row">
+              <span class="price">LKR 45,500.00</span>
+              <span class="status">Only a few left</span>
+            </div>
+          </div>
+        </article>
+        <article class="product-card">
+          <div class="product-media">
+            <img src="https://forttune.lk/wp-content/uploads/2025/02/corsiar-266666666666666-1.jpg" alt="Corsair K70 RGB gaming keyboard">
+          </div>
+          <div class="product-info">
+            <h3>Corsair K70 RGB</h3>
+            <p>Responsive mechanical keyboard with customizable RGB lighting and durable aircraft-grade frame.</p>
+            <div class="price-row">
+              <span class="price">LKR 58,500.00</span>
+              <span class="status">In stock</span>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>© 2026 TechZone Gadget Store. Discover the latest electronics, accessories, and smart devices in one place.</p>
+    </div>
+  </footer>
+</body>
+</html>
